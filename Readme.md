@@ -2,14 +2,15 @@
 
 Niki is a Ruby DSL to describe and play musical pieces.
 
+Its name comes from the [world-famous band Niki](http://niki.fm) which I happen
+to be part of.
+
 It leverages Giles Bowkett's [Archaeopteryx](
 https://github.com/gilesbowkett/archaeopteryx) to send MIDI output to other
 programs accepting MIDI inputs (Ableton Live, Reason, Garage Band...), which
 will actually play the song.
 
-To see what the DSL looks like, take a look at the [example song](https://github.com/txus/niki/blob/master/examples/my_song.rb)
-
-https://github.com/gilesbowkett/archaeopteryx/blob/master/db_drum_definition.rb
+To see what the DSL looks like, take a look at the [example song](https://github.com/txus/niki/blob/master/examples/my_song.rb).
 
 ## Caveats
 
@@ -47,6 +48,7 @@ Now you should install the gem and run the example!
 
     $ gem install niki
     $ ruby my_song.rb
+
 
 # TODO
 
