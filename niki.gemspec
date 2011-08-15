@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "niki"
 
   s.add_runtime_dependency 'midilib'
-  s.add_development_dependency 'minitest'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

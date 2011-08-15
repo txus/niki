@@ -30,7 +30,7 @@ module Niki
           inversion = args.first || 1
           case inversion
           when 1
-            [base, base + 2, base + 7]
+            [base, base + 3, base + 7]
           when 2
             [base + 3, base + 7, base + 12]
           when 3
@@ -40,22 +40,5 @@ module Niki
       end
 
     end
-
-    def kick
-      c1
-    end
-
-    def snare
-      d1
-    end
-
-    def hh
-      e1
-    end
-
-    def ohh
-      f1
-    end
-
   end
 end

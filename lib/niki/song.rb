@@ -1,6 +1,8 @@
 module Niki
   class Song
-    attr_reader :tempo
+    attr_reader :tempo, :drum_notes
+
+    include Niki::Chords
 
     def initialize(options, &block)
       @clock = Archaeopteryx::Midi::Clock.new(options[:tempo] || 127)
@@ -9,6 +11,7 @@ module Niki
 
       @parts = []
       @channel = {}
+      @drum_notes = {}
       @tempo = options[:tempo]
       self.instance_eval &block
     end
@@ -22,6 +25,13 @@ module Niki
       @parts << Part.new(name, self, &block)
     end
 
+    def configure(instrument, &block)
+      case instrument
+      when :drums
+        block.call @drum_notes
+      end
+    end
+
     def repeat(name, options = {})
       (options[:times] || 1).times do
         @parts << get_part(name)
@@ -29,96 +39,42 @@ module Niki
     end
 
     def play
-      [
-        Thread.start { play_instrument(:bass) },
-        Thread.start { play_instrument(:chords) },
-        Thread.start { play_instrument(:melodies) },
-        Thread.start { play_instrument(:drums) },
-      ].map { |t| t.join }
+      @parts.each do |part|
+        [:basses, :chords, :melodies, :drums].map do |instrument_name|
+          Thread.start do
+            play_part(part, instrument_name)
+          end
+        end.map { |thread| thread.join }
+      end
     end
 
-    def play_instrument(instrument = :chords)
-      @parts.each do |part|
-        case instrument
-        when :drums
-          part.drums.each do |drum|
-            notes = [drum.first].flatten.map do |note|
-              Archaeopteryx::Midi::Note.create(:channel => @channel[:drums],
-                       :number => note,
-                       :duration => drum.last,
-                       :velocity => 127)
-            end
-            notes.each do |note|
-              @midi.note_on(note)
-            end
-            sleep(drum.last)
-            notes.each do |note|
-              @midi.note_off(note)
-            end
-          end
-
-        when :bass
-          part.basses.each do |bass|
-            notes = bass.first.map do |note|
-              Archaeopteryx::Midi::Note.create(:channel => @channel[:bass],
-                       :number => note,
-                       :duration => bass.last,
-                       :velocity => 127)
-            end
-            notes.each do |note|
-              @midi.note_on(note)
-            end
-            sleep(bass.last)
-            notes.each do |note|
-              @midi.note_off(note)
-            end
-          end
-
-        when :melodies
-          part.melodies.each do |melody|
-            notes = melody.first.map do |note|
-              Archaeopteryx::Midi::Note.create(:channel => @channel[:melodies],
-                       :number => note,
-                       :duration => melody.last,
-                       :velocity => 127)
-            end
-            notes.each do |note|
-              @midi.note_on(note)
-            end
-            sleep(melody.last)
-            notes.each do |note|
-              @midi.note_off(note)
-            end
-          end
-
-        when :chords
-          part.chords.each do |chord|
-            notes = chord.first.compact.map do |note|
-              Archaeopteryx::Midi::Note.create(:channel => @channel[:chords],
-                       :number => note,
-                       :duration => chord.last,
-                       :velocity => 127)
-            end
-            notes.each do |note|
-              @midi.note_on(note)
-            end
-            sleep(chord.last)
-            notes.each do |note|
-              @midi.note_off(note)
-            end
-          end
+    def play_part(part, instrument_name)
+      part.send(instrument_name).each do |instrument|
+        notes = [instrument.first].flatten.compact.map do |note|
+          Archaeopteryx::Midi::Note.create(
+            :channel => @channel[instrument_name],
+            :number => note,
+            :duration => instrument.last,
+            :velocity => 127)
+        end
+        notes.each do |note|
+          @midi.note_on(note)
+        end
+        sleep(instrument.last)
+        notes.each do |note|
+          @midi.note_off(note)
         end
       end
+    end
+
+    def get_part(name)
+      @parts.detect {|p| p.name == name }
     end
 
     private
 
     def has_part?(name)
       !!@parts.map(&:name).detect {|part_name| part_name == name }
-    end
-
-    def get_part(name)
-      @parts.detect {|p| p.name == name }
     end
 
   end
