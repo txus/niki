@@ -2,22 +2,15 @@ PATH
   remote: .
   specs:
     niki (0.0.1)
+      midilib
 
 GEM
   remote: http://rubygems.org/
   specs:
-    diff-lcs (1.1.2)
     ffi (1.0.9)
     ffi-coremidi (0.0.8)
       ffi (>= 1.0)
-    rspec (2.4.0)
-      rspec-core (~> 2.4.0)
-      rspec-expectations (~> 2.4.0)
-      rspec-mocks (~> 2.4.0)
-    rspec-core (2.4.0)
-    rspec-expectations (2.4.0)
-      diff-lcs (~> 1.1.2)
-    rspec-mocks (2.4.0)
+    midilib (2.0.0)
     unimidi (0.2.1)
       ffi-coremidi
 
@@ -26,5 +19,4 @@ PLATFORMS
 
 DEPENDENCIES
   niki!
-  rspec (~> 2.4.0)
   unimidi
