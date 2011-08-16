@@ -40,5 +40,6 @@ module Niki
       end
 
     end
+
   end
 end

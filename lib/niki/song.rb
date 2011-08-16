@@ -1,3 +1,5 @@
+require 'unimidi'
+
 module Niki
   class Song
     attr_reader :tempo, :drum_notes
@@ -5,9 +7,10 @@ module Niki
     include Niki::Chords
 
     def initialize(options, &block)
-      @clock = Archaeopteryx::Midi::Clock.new(options[:tempo] || 127)
+      # @clock = Archaeopteryx::Midi::Clock.new(options[:tempo] || 127)
 
-      @midi = Archaeopteryx::Midi::PracticalRubyProjects::LiveMIDI.new(:clock => @clock )
+      @midi = UniMIDI::Output.first
+      # @midi = Archaeopteryx::Midi::PracticalRubyProjects::LiveMIDI.new(:clock => @clock )
 
       @parts = []
       @channel = {}
@@ -45,24 +48,27 @@ module Niki
             play_part(part, instrument_name)
           end
         end.map { |thread| thread.join }
+
+        [:basses, :chords, :melodies, :drums].each do |instrument_name|
+          reset(instrument_name)
+        end
       end
     end
 
     def play_part(part, instrument_name)
-      part.send(instrument_name).each do |instrument|
-        notes = [instrument.first].flatten.compact.map do |note|
-          Archaeopteryx::Midi::Note.create(
-            :channel => @channel[instrument_name],
-            :number => note,
-            :duration => instrument.last,
-            :velocity => 127)
-        end
-        notes.each do |note|
-          @midi.note_on(note)
-        end
-        sleep(instrument.last)
-        notes.each do |note|
-          @midi.note_off(note)
+      return if part.send(instrument_name).length.zero?
+      channel = @channel[instrument_name]
+
+      @midi.open do |out|
+        part.send(instrument_name).each do |instrument|
+          notes = [instrument.first].flatten.compact
+          notes.each do |note|
+            out.puts 0x90 + channel, note, 100
+          end
+          sleep(instrument.last)
+          notes.each do |note|
+            out.puts 0x80 + channel, note, 100
+          end
         end
       end
     end
@@ -75,6 +81,16 @@ module Niki
 
     def has_part?(name)
       !!@parts.map(&:name).detect {|part_name| part_name == name }
+    end
+
+    def reset(instrument_name)
+      channel = @channel[instrument_name]
+      @midi.open do |out|
+        # Reset all notes
+        95.times do |i|
+          out.puts 0x80 + channel, i, 100
+        end
+      end
     end
 
   end
