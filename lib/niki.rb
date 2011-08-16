@@ -1,4 +1,3 @@
-require File.expand_path(File.dirname(__FILE__)) + "/../vendor/archaeopteryx/archaeopteryx"
 require 'core_ext/fixnum'
 require 'core_ext/array'
 require 'niki/chords'

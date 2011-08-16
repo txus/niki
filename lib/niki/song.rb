@@ -6,12 +6,11 @@ module Niki
 
     include Niki::Chords
 
+    NOTE_ON  = 0x90
+    NOTE_OFF = 0x80
+
     def initialize(options, &block)
-      # @clock = Archaeopteryx::Midi::Clock.new(options[:tempo] || 127)
-
       @midi = UniMIDI::Output.first
-      # @midi = Archaeopteryx::Midi::PracticalRubyProjects::LiveMIDI.new(:clock => @clock )
-
       @parts = []
       @channel = {}
       @drum_notes = {}
@@ -63,11 +62,11 @@ module Niki
         part.send(instrument_name).each do |instrument|
           notes = [instrument.first].flatten.compact
           notes.each do |note|
-            out.puts 0x90 + channel, note, 100
+            out.puts NOTE_ON + channel, note, 100
           end
           sleep(instrument.last)
           notes.each do |note|
-            out.puts 0x80 + channel, note, 100
+            out.puts NOTE_OFF + channel, note, 100
           end
         end
       end
@@ -88,7 +87,7 @@ module Niki
       @midi.open do |out|
         # Reset all notes
         95.times do |i|
-          out.puts 0x80 + channel, i, 100
+          out.puts NOTE_OFF + channel, i, 100
         end
       end
     end

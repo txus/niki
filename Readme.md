@@ -3,21 +3,21 @@
 Niki is a Ruby DSL to describe and play musical pieces.
 
 Its name comes from the [world-famous band Niki](http://niki.fm) which I happen
-to be part of.
+to be part of :D
 
-It leverages Giles Bowkett's [Archaeopteryx](
-https://github.com/gilesbowkett/archaeopteryx) to send MIDI output to other
+It leverages Ari Russo's [Unimidi](
+https://github.com/arirusso/unimidi) to send MIDI output to other
 programs accepting MIDI inputs (Ableton Live, Reason, Garage Band...), which
 will actually play the song.
 
 To see what the DSL looks like, take a look at the [example song](https://github.com/txus/niki/blob/master/examples/my_song.rb).
 
-## Caveats
+Thanks to Unimidi, it works on all major platforms (Linux, OSX and Windows). To
+ensure Niki will run on your platform (I've personally tested it with OSX only),
+please look at the [Unimidi repo at Github](https://github.com/arirusso/unimidi)
+for instructions about your specific platform.
 
-* It runs only in Ruby 1.8.7 (due to the dependency on Archaeopteryx) :(
-* I've tested this only in Snow Leopard, but it should run in more platforms.
-  If your platform is not supported it's because Archaeopteryx
-  doesn't support it yet.
+Currently niki runs (at least) on Ruby MRI versions 1.8.7 and 1.9.2.
 
 ## Run the example song
 
@@ -37,10 +37,8 @@ difficult in other operating systems):
 
 * Make sure the IAC driver is activated in Mac OSX's Audio/MIDI Setup (inside the
 MIDI section) (activate the "Device is online" checkbox if it is not)
-* In this section, make sure at least one port is created (under the Ports
-section). If not, add one clicking the + button.
 * Go to the Reason options panel, go to Advanced, and set your first
-MIDI bus (Bus A) to "IAC Driver IAC Bus 1" (the port you just created).
+MIDI bus (Bus A) to "IAC Driver IAC Bus 1" or something similar.
 
 ### Install the gem and run!
 
@@ -48,8 +46,6 @@ Now you should install the gem and run the example!
 
     $ gem install niki
     $ ruby my_song.rb
-
-
 
 # TODO
 

@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     niki (0.0.1)
-      midilib
+      unimidi
 
 GEM
   remote: http://rubygems.org/
@@ -10,7 +10,6 @@ GEM
     ffi (1.0.9)
     ffi-coremidi (0.0.8)
       ffi (>= 1.0)
-    midilib (2.0.0)
     unimidi (0.2.1)
       ffi-coremidi
 
