@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    niki (0.0.1)
+    niki (0.1.0)
       unimidi
 
 GEM
@@ -10,6 +10,7 @@ GEM
     ffi (1.0.9)
     ffi-coremidi (0.0.8)
       ffi (>= 1.0)
+    rake (0.9.2)
     unimidi (0.2.1)
       ffi-coremidi
 
@@ -18,4 +19,4 @@ PLATFORMS
 
 DEPENDENCIES
   niki!
-  unimidi
+  rake
