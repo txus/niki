@@ -3,43 +3,51 @@ require 'niki'
 
 song = Niki::Song.new :tempo => 127 do
 
-  # Configure midi channels
-  channel :basses, 1
-  channel :drums, 10
-  channel :chords, 2
-  channel :melodies, 3
+  instrument :bass do
+    channel 1
+  end
 
-  configure :drums do |drums|
-    drums[:kick]  = c1
-    drums[:snare] = c1.sharp
-    drums[:hh]    = g1
-    drums[:ohh]   = g1.sharp
+  instrument :chords do
+    channel 2
+  end
+
+  instrument :melody do
+    channel 3
+  end
+
+  instrument :drums do
+    channel 10
+
+    note[:kick]  = c1
+    note[:snare] = c1.sharp
+    note[:hh]    = g1
+    note[:ohh]   = g1.sharp
   end
 
   part :intro do
     # Drums
     2.times do
-      drum [:kick, :hh], 8
-      drum :hh, 8
-      drum [:snare, :hh], 8
-      drum :hh, 8
+      drums [:kick, :hh], 8
+      drums :hh, 8
+      drums [:snare, :hh], 8
+      drums :hh, 8
 
-      drum [:kick, :hh], 8
-      drum :hh, 8
-      drum [:snare, :hh], 8
-      drum [:kick, :hh], 8
+      drums [:kick, :hh], 8
+      drums :hh, 8
+      drums [:snare, :hh], 8
+      drums [:kick, :hh], 8
 
-      drum :hh, 16
-      drum :hh, 16
-      drum :hh, 16
-      drum :hh, 16
-      drum [:snare, :hh], 8
-      drum :hh, 8
+      drums :hh, 16
+      drums :hh, 16
+      drums :hh, 16
+      drums :hh, 16
+      drums [:snare, :hh], 8
+      drums :hh, 8
 
-      drum [:kick, :hh], 8
-      drum [:kick, :hh], 8
-      drum [:snare, :hh], 8
-      drum :ohh, 8
+      drums [:kick, :hh], 8
+      drums [:kick, :hh], 8
+      drums [:snare, :hh], 8
+      drums :ohh, 8
     end
 
     # Bass
@@ -76,48 +84,48 @@ song = Niki::Song.new :tempo => 127 do
 
   part :intro_ending do
     # Drums
-    drum [:kick, :hh], 8
-    drum :hh, 8
-    drum [:snare, :hh], 8
-    drum :hh, 8
+    drums [:kick, :hh], 8
+    drums :hh, 8
+    drums [:snare, :hh], 8
+    drums :hh, 8
 
-    drum [:kick, :hh], 8
-    drum :hh, 8
-    drum [:snare, :hh], 8
-    drum [:kick, :hh], 8
+    drums [:kick, :hh], 8
+    drums :hh, 8
+    drums [:snare, :hh], 8
+    drums [:kick, :hh], 8
 
-    drum :hh, 16
-    drum :hh, 16
-    drum :hh, 16
-    drum :hh, 16
-    drum [:snare, :hh], 8
-    drum :hh, 8
+    drums :hh, 16
+    drums :hh, 16
+    drums :hh, 16
+    drums :hh, 16
+    drums [:snare, :hh], 8
+    drums :hh, 8
 
-    drum [:kick, :hh], 8
-    drum [:kick, :hh], 8
-    drum [:snare, :hh], 8
-    drum :ohh, 8
+    drums [:kick, :hh], 8
+    drums [:kick, :hh], 8
+    drums [:snare, :hh], 8
+    drums :ohh, 8
 
-    # Drum break
-    drum [:kick, :hh], 8
-    drum :hh, 8
-    drum [:kick, :hh], 8
-    drum :hh, 8
-    drum [:kick, :hh], 8
-    drum :hh, 8
-    drum [:kick, :hh], 8
-    drum :hh, 8
+    # drums break
+    drums [:kick, :hh], 8
+    drums :hh, 8
+    drums [:kick, :hh], 8
+    drums :hh, 8
+    drums [:kick, :hh], 8
+    drums :hh, 8
+    drums [:kick, :hh], 8
+    drums :hh, 8
 
-    drum [:snare, :ooh], 4
-    drum [:snare, :ooh], 4
-    drum :snare, 16
-    drum :snare, 16
-    drum :kick, 16
-    drum :kick, 16
-    drum :snare, 16
-    drum :snare, 16
-    drum [:snare, :ooh], 16
-    drum :snare, 16
+    drums [:snare, :ooh], 4
+    drums [:snare, :ooh], 4
+    drums :snare, 16
+    drums :snare, 16
+    drums :kick, 16
+    drums :kick, 16
+    drums :snare, 16
+    drums :snare, 16
+    drums [:snare, :ooh], 16
+    drums :snare, 16
 
     # Bass
     bass f2, 4
@@ -152,7 +160,7 @@ song = Niki::Song.new :tempo => 127 do
 
   part :pre_chorus do
     bass :from => :intro
-    drum :from => :intro
+    drums :from => :intro
 
     melody a2, 4
     melody a2, 4
@@ -220,47 +228,47 @@ song = Niki::Song.new :tempo => 127 do
 
     # Drums
     7.times do
-      drum [:kick, :hh], 8
-      drum :hh, 8
-      drum [:snare, :kick, :hh], 8
-      drum :hh, 8
+      drums [:kick, :hh], 8
+      drums :hh, 8
+      drums [:snare, :kick, :hh], 8
+      drums :hh, 8
     end
-    drum :kick, 8
-    drum :hh, 16
-    drum :hh, 16
-    drum [:snare, :kick], 16
-    drum :snare, 16
-    drum [:kick, :ohh], 8
+    drums :kick, 8
+    drums :hh, 16
+    drums :hh, 16
+    drums [:snare, :kick], 16
+    drums :snare, 16
+    drums [:kick, :ohh], 8
 
     # Chords
-    chord a3MIN(2), 2, :base => f3
-    chord a3MIN(2), 8, :base => f3
-    chord a3MIN(2), 8, :base => f3
-    chord a3MIN(2), 8, :base => f3
-    chord c3MAJ, 4
-    chord c3MAJ, 4
-    chord c3MAJ, 8
-    chord g3MAJ, 2
-    chord [a3, b3, e4]
-    chord c3MAJ, 4
-    chord c3MAJ, 4
-    chord g3MAJ, 8
-    chord g3MAJ, 8
-    chord g3MAJ, 8, :base => f4
-    chord g3MAJ, 8, :base => e4
+    chords a3MIN(2), 2, :base => f3
+    chords a3MIN(2), 8, :base => f3
+    chords a3MIN(2), 8, :base => f3
+    chords a3MIN(2), 8, :base => f3
+    chords c3MAJ, 4
+    chords c3MAJ, 4
+    chords c3MAJ, 8
+    chords g3MAJ, 2
+    chords [a3, b3, e4]
+    chords c3MAJ, 4
+    chords c3MAJ, 4
+    chords g3MAJ, 8
+    chords g3MAJ, 8
+    chords g3MAJ, 8, :base => f4
+    chords g3MAJ, 8, :base => e4
   end
 
   repeat :chorus
 
   part :outro do
-    drum :from => :intro
+    drums :from => :intro
     bass :from => :intro
-    chord :from => :chorus
+    chords :from => :chorus
   end
 
   part :outro_ending do
     bass :from => :intro
-    chord :from => :chorus
+    chords :from => :chorus
   end
 end
 

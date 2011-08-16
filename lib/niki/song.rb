@@ -2,7 +2,7 @@ require 'unimidi'
 
 module Niki
   class Song
-    attr_reader :tempo, :drum_notes
+    attr_reader :tempo
 
     include Niki::Chords
 
@@ -12,14 +12,10 @@ module Niki
     def initialize(options, &block)
       @midi = UniMIDI::Output.first
       @parts = []
+      @instruments = []
       @channel = {}
-      @drum_notes = {}
       @tempo = options[:tempo]
       self.instance_eval &block
-    end
-
-    def channel(instrument, number)
-      @channel[instrument] = number - 1
     end
 
     def part(name, &block)
@@ -27,11 +23,8 @@ module Niki
       @parts << Part.new(name, self, &block)
     end
 
-    def configure(instrument, &block)
-      case instrument
-      when :drums
-        block.call @drum_notes
-      end
+    def instrument(name, &block)
+      @instruments << Instrument.new(name, self, &block)
     end
 
     def repeat(name, options = {})
@@ -42,29 +35,29 @@ module Niki
 
     def play
       @parts.each do |part|
-        [:basses, :chords, :melodies, :drums].map do |instrument_name|
+        @instruments.map do |instrument|
           Thread.start do
-            play_part(part, instrument_name)
+            play_part(part, instrument)
           end
         end.map { |thread| thread.join }
 
-        [:basses, :chords, :melodies, :drums].each do |instrument_name|
-          reset(instrument_name)
+        @instruments.each do |instrument|
+          reset(instrument)
         end
       end
     end
 
-    def play_part(part, instrument_name)
-      return if part.send(instrument_name).length.zero?
-      channel = @channel[instrument_name]
+    def play_part(part, instrument)
+      return if part.for_instrument(instrument.name).length.zero?
+      channel = instrument.channel_number
 
       @midi.open do |out|
-        part.send(instrument_name).each do |instrument|
-          notes = [instrument.first].flatten.compact
+        part.for_instrument(instrument.name).each do |notes, duration|
+          notes = [notes].flatten.compact
           notes.each do |note|
             out.puts NOTE_ON + channel, note, 100
           end
-          sleep(instrument.last)
+          sleep(duration)
           notes.each do |note|
             out.puts NOTE_OFF + channel, note, 100
           end
@@ -82,12 +75,11 @@ module Niki
       !!@parts.map(&:name).detect {|part_name| part_name == name }
     end
 
-    def reset(instrument_name)
-      channel = @channel[instrument_name]
+    def reset(instrument)
       @midi.open do |out|
         # Reset all notes
         95.times do |i|
-          out.puts NOTE_OFF + channel, i, 100
+          out.puts NOTE_OFF + instrument.channel_number, i, 100
         end
       end
     end
