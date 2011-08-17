@@ -41,5 +41,9 @@ module Niki
 
     end
 
+    def silence
+      0
+    end
+
   end
 end

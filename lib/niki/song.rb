@@ -52,14 +52,18 @@ module Niki
       channel = instrument.channel_number
 
       @midi.open do |out|
-        part.for_instrument(instrument.name).each do |notes, duration|
+        part.for_instrument(instrument.name).each do |notes, duration, velocity|
           notes = [notes].flatten.compact
           notes.each do |note|
-            out.puts NOTE_ON + channel, note, 100
+            if note == 0 # Silence
+              out.puts NOTE_OFF + channel, last_note, velocity
+            end
+            out.puts NOTE_ON + channel, note, velocity
+            last_note = note
           end
           sleep(duration)
           notes.each do |note|
-            out.puts NOTE_OFF + channel, note, 100
+            out.puts NOTE_OFF + channel, note, velocity
           end
         end
       end

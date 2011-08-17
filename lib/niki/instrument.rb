@@ -33,6 +33,8 @@ module Niki
           duration = args.shift || 1
           options  = args.shift || {}
 
+          velocity = options[:v] || 100
+
           if note.is_a?(Hash) && note[:from]
             copy_from_part(note[:from], instrument_name)
             return
@@ -49,7 +51,7 @@ module Niki
 
           note.push options[:base]
 
-          register_note(instrument_name, note, duration)
+          register_note(instrument_name, note, duration, velocity)
         end
       end
     end

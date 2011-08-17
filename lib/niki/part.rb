@@ -22,9 +22,9 @@ module Niki
       @notes[type] = part.send(type)
     end
 
-    def register_note(instrument_name, note, duration)
+    def register_note(instrument_name, note, duration, velocity)
       @notes[instrument_name] ||= []
-      @notes[instrument_name] << [note, calculate_duration(duration)]
+      @notes[instrument_name] << [note, calculate_duration(duration), velocity]
     end
 
     def calculate_duration(duration)

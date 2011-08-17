@@ -38,7 +38,7 @@ song = Niki::Song.new :tempo => 127 do
       drums [:kick, :hh], 8
 
       drums :hh, 16
-      drums :hh, 16
+      drums silence, 16
       drums :hh, 16
       drums :hh, 16
       drums [:snare, :hh], 8
@@ -228,15 +228,15 @@ song = Niki::Song.new :tempo => 127 do
 
     # Drums
     7.times do
-      drums [:kick, :hh], 8
+      drums [:kick, :hh], 8, :velocity => 127
       drums :hh, 8
-      drums [:snare, :kick, :hh], 8
+      drums [:snare, :kick, :hh], 8, :velocity => 127
       drums :hh, 8
     end
-    drums :kick, 8
+    drums :kick, 8, :velocity => 127
     drums :hh, 16
     drums :hh, 16
-    drums [:snare, :kick], 16
+    drums [:snare, :kick], 16, :velocity => 127
     drums :snare, 16
     drums [:kick, :ohh], 8
 
