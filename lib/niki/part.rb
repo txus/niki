@@ -19,7 +19,7 @@ module Niki
 
     def copy_from_part(name, type)
       part = @song.get_part(name)
-      @notes[type] = part.send(type)
+      @notes[type] = part.for_instrument(type)
     end
 
     def register_note(instrument_name, note, duration, velocity)

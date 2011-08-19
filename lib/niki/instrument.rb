@@ -41,15 +41,15 @@ module Niki
           end
 
           note = [note].flatten.map do |n|
-            if note.is_a?(Fixnum)
-              note
+            if n.is_a?(Fixnum)
+              n
             else
               # Try to fetch the note from the symbol
-              macros[note]
+              macros[n]
             end
           end
 
-          note.push options[:base]
+          note.push options[:base] if options[:base]
 
           register_note(instrument_name, note, duration, velocity)
         end

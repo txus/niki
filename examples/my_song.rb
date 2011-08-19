@@ -116,15 +116,15 @@ song = Niki::Song.new :tempo => 127 do
     drums [:kick, :hh], 8
     drums :hh, 8
 
-    drums [:snare, :ooh], 4
-    drums [:snare, :ooh], 4
+    drums [:snare, :ohh], 4
+    drums [:snare, :ohh], 4
     drums :snare, 16
     drums :snare, 16
     drums :kick, 16
     drums :kick, 16
     drums :snare, 16
     drums :snare, 16
-    drums [:snare, :ooh], 16
+    drums [:snare, :ohh], 16
     drums :snare, 16
 
     # Bass
