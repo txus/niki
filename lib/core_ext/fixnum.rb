@@ -1,8 +1,8 @@
 class Fixnum
-  def sharp
+  def +@
     self + 1
   end
-  def flat
+  def -@
     self - 1
   end
 end

@@ -19,9 +19,9 @@ song = Niki::Song.new :tempo => 127 do
     channel 10
 
     note[:kick]  = c1
-    note[:snare] = c1.sharp
+    note[:snare] = +c1
     note[:hh]    = g1
-    note[:ohh]   = g1.sharp
+    note[:ohh]   = +g1
   end
 
   part :intro do

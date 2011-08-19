@@ -1,11 +1,11 @@
 class Array
-  def sharp
+  def +@
     map do |element|
       element + 1
     end
   end
 
-  def flat
+  def -@
     map do |element|
       element - 1
     end
