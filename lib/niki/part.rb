@@ -15,6 +15,13 @@ module Niki
       @notes[instrument_name] || []
     end
 
+    def riff(name, instrument_name, &blk)
+      riff = @song.get_riff(name)
+      riff.notes.each do |args|
+        send(instrument_name, *args)
+      end
+    end
+
     private
 
     def copy_from_part(name, type)

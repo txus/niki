@@ -68,6 +68,15 @@ A Niki Song is represented this way:
         note[:hh]    = e1 # And the hh will be e1
       end
 
+      # You can define reusable riffs that you will be able to play with
+      # different instruments:
+      riff :simple_break do
+        note g3, 8
+        note f3, 8
+        note e3, 8
+        note d3, 8
+      end
+
       # Define your song parts like this:
       part :intro do
         # Notes are defined like this:
@@ -112,9 +121,9 @@ A Niki Song is represented this way:
         piano f2MAJ, 4
         piano a2MIN, 4, :base => f2
         piano silence, 4
-        piano a2MIN, 4 :base => f2
-        piano a2MIN, 8
-        piano a2MIN, 8
+
+        # Play the previously defined riff with the piano.
+        riff :simple_break, :piano
       end
 
       # You can repeat any part!
@@ -137,3 +146,4 @@ A Niki Song is represented this way:
 
     # Play the song!!!
     song.play
+

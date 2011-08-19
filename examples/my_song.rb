@@ -24,6 +24,39 @@ song = Niki::Song.new :tempo => 127 do
     note[:ohh]   = +g1
   end
 
+  # Define reusable riffs with this snippet
+  riff :simple_notes do
+    note f2, 4
+
+    note f2, 8
+    note e2, 8
+    note f2, 8
+    note e2, 8
+    note f2, 8
+
+    note e3, 4
+    note c3, 4
+    note b2, 8
+    note c2, 8
+    note c2, 8
+    note g2, 4
+
+    note a2, 4
+
+    note a2, 8
+    note g2, 8
+    note a2, 8
+    note g2, 8
+    note a2, 8
+
+    note e3, 4
+    note c3, 4
+    note b2, 8
+    note c2, 8
+    note c2, 8
+    note g2, 4
+  end
+
   part :intro do
     # Drums
     2.times do
@@ -50,36 +83,8 @@ song = Niki::Song.new :tempo => 127 do
       drums :ohh, 8
     end
 
-    # Bass
-    bass f2, 4
-
-    bass f2, 8
-    bass e2, 8
-    bass f2, 8
-    bass e2, 8
-    bass f2, 8
-
-    bass e3, 4
-    bass c3, 4
-    bass b2, 8
-    bass c2, 8
-    bass c2, 8
-    bass g2, 4
-
-    bass a2, 4
-
-    bass a2, 8
-    bass g2, 8
-    bass a2, 8
-    bass g2, 8
-    bass a2, 8
-
-    bass e3, 4
-    bass c3, 4
-    bass b2, 8
-    bass c2, 8
-    bass c2, 8
-    bass g2, 4
+    # Play the simple notes riff with bass
+    riff :simple_notes, :bass
   end
 
   part :intro_ending do
@@ -127,35 +132,8 @@ song = Niki::Song.new :tempo => 127 do
     drums [:snare, :ohh], 16
     drums :snare, 16
 
-    # Bass
-    bass f2, 4
-
-    bass f2, 8
-    bass e2, 8
-    bass f2, 8
-    bass e2, 8
-    bass f2, 8
-
-    bass e3, 4
-    bass c3, 4
-    bass b2, 8
-    bass c2, 8
-    bass c2, 8
-    bass g2, 4
-
-    bass a2, 4
-    bass a2, 4
-    bass a2, 4
-    bass a2, 4
-
-    bass b2, 8
-    bass b2, 8
-    bass b2, 8
-    bass c2, 8
-    bass c2, 8
-    bass c2, 8
-    bass d3, 8
-    bass e3, 8
+    # Play the simple notes riff with bass
+    riff :simple_notes, :bass
   end
 
   part :pre_chorus do

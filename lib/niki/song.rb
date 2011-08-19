@@ -13,6 +13,7 @@ module Niki
       @midi = UniMIDI::Output.first
       @parts = []
       @instruments = []
+      @riffs = []
       @channel = {}
       @tempo = options[:tempo]
       self.instance_eval &block
@@ -25,6 +26,10 @@ module Niki
 
     def instrument(name, &block)
       @instruments << Instrument.new(name, self, &block)
+    end
+
+    def riff(name, &block)
+      @riffs << Riff.new(name, self, &block)
     end
 
     def repeat(name, options = {})
@@ -74,6 +79,10 @@ module Niki
 
     def get_part(name)
       @parts.detect {|p| p.name == name }
+    end
+
+    def get_riff(name)
+      @riffs.detect {|p| p.name == name }
     end
 
     private
