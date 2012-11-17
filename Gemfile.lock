@@ -7,11 +7,11 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    ffi (1.0.9)
-    ffi-coremidi (0.0.8)
+    ffi (1.1.5)
+    ffi-coremidi (0.1.8)
       ffi (>= 1.0)
-    rake (0.9.2)
-    unimidi (0.2.1)
+    rake (0.9.2.2)
+    unimidi (0.3.3)
       ffi-coremidi
 
 PLATFORMS
